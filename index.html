@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sua clínica está pronta pra automação? | arkynIA tech</title>
+<meta name="description" content="Diagnóstico gratuito: descubra o nível de maturidade da sua clínica em automação e os 3 próximos movimentos." />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Hanken+Grotesk:wght@400;500;600;700&display=swap');
+
+  :root{
+    --accent:#E8B873;
+    --bg:#0B0B0C;
+    --card:#141416;
+    --line:#26262b;
+    --text:#F4EFE7;
+    --muted:#A7A7AD;
+    --dim:#6b6b70;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:var(--bg);}
+  body{font-family:'Hanken Grotesk',sans-serif;color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;}
+  .grain:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.035;z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+  .wrap{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:40px 20px 64px;}
+  @media(min-width:640px){.wrap{padding:64px 32px;}}
+
+  .bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;}
+  .brand{letter-spacing:.25em;font-size:11px;text-transform:uppercase;color:var(--accent);}
+  .count{font-size:11px;color:var(--dim);letter-spacing:.03em;}
+
+  .fade{animation:fadeUp .45s cubic-bezier(.2,.7,.2,1) both;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+  @keyframes grow{from{width:0;}}
+
+  .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;border:1px solid rgba(232,184,115,.2);color:var(--accent);font-size:11px;letter-spacing:.03em;text-transform:uppercase;margin-bottom:28px;}
+  h1{font-family:'Fraunces',serif;font-weight:600;font-size:34px;line-height:1.05;margin-bottom:20px;}
+  @media(min-width:640px){h1{font-size:48px;}}
+  h1 .it{color:var(--accent);font-style:italic;}
+  .lead{font-size:15px;line-height:1.6;color:var(--muted);margin-bottom:36px;}
+  @media(min-width:640px){.lead{font-size:16px;}}
+
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:999px;font-weight:600;font-size:15px;background:var(--accent);color:var(--bg);border:none;cursor:pointer;font-family:inherit;transition:transform .15s;text-decoration:none;}
+  .btn:hover{transform:translateY(-1px);}
+  .btn svg{transition:transform .2s;}
+  .btn:hover svg{transform:translateX(3px);}
+
+  .prog{height:3px;width:100%;border-radius:999px;background:#222226;overflow:hidden;margin-bottom:36px;}
+  .prog>span{display:block;height:100%;border-radius:999px;background:var(--accent);transition:width .5s cubic-bezier(.2,.7,.2,1);}
+
+  .qicon{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;background:rgba(232,184,115,.08);color:var(--accent);margin-bottom:24px;}
+  h2{font-family:'Fraunces',serif;font-weight:600;font-size:24px;line-height:1.15;margin-bottom:8px;}
+  @media(min-width:640px){h2{font-size:30px;}}
+  .qsub{font-size:13px;color:var(--dim);margin-bottom:28px;}
+
+  .opt{display:block;width:100%;text-align:left;padding:16px 20px;border-radius:16px;font-size:15px;line-height:1.35;background:var(--card);border:1px solid var(--line);color:#C9C9CF;cursor:pointer;font-family:inherit;margin-bottom:12px;transition:border-color .2s,background .2s,color .2s;}
+  .opt:hover{border-color:#3a3a40;}
+  .opt.sel{background:rgba(232,184,115,.1);border-color:var(--accent);color:var(--text);}
+
+  .back{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--dim);background:none;border:none;cursor:pointer;font-family:inherit;margin-top:28px;}
+
+  /* form */
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:12px;letter-spacing:.02em;color:var(--muted);margin-bottom:7px;}
+  .field input{width:100%;padding:14px 16px;border-radius:14px;background:var(--card);border:1px solid var(--line);color:var(--text);font-size:15px;font-family:inherit;outline:none;transition:border-color .2s;}
+  .field input:focus{border-color:var(--accent);}
+  .field input::placeholder{color:#55555b;}
+  .err{color:#e07a5f;font-size:12px;margin-top:6px;display:none;}
+  .field.invalid .err{display:block;}
+  .field.invalid input{border-color:#e07a5f;}
+  .consent{font-size:12px;color:var(--dim);line-height:1.5;margin:6px 0 20px;}
+
+  /* result */
+  .eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:12px;}
+  .tier{font-family:'Fraunces',serif;font-weight:600;font-style:italic;font-size:32px;line-height:1.05;color:var(--accent);margin-bottom:24px;}
+  @media(min-width:640px){.tier{font-size:48px;}}
+  .scorerow{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:8px;}
+  .scorelabel{font-size:12px;color:var(--dim);}
+  .scorepct{font-family:'Fraunces',serif;font-weight:600;font-size:24px;}
+  .scorebar{height:10px;width:100%;border-radius:999px;background:#222226;overflow:hidden;margin-bottom:32px;}
+  .scorebar>span{display:block;height:100%;border-radius:999px;background:var(--accent);animation:grow 1s cubic-bezier(.2,.7,.2,1);}
+  .headline{font-family:'Fraunces',serif;font-weight:600;font-size:20px;line-height:1.2;margin-bottom:12px;}
+  @media(min-width:640px){.headline{font-size:24px;}}
+  .desc{font-size:15px;line-height:1.6;color:var(--muted);margin-bottom:32px;}
+  .levers{border-radius:16px;padding:22px;background:var(--card);border:1px solid var(--line);margin-bottom:32px;}
+  .levers .lt{display:flex;align-items:center;gap:8px;color:var(--accent);font-size:12px;letter-spacing:.03em;text-transform:uppercase;margin-bottom:16px;}
+  .lever{display:flex;gap:14px;margin-bottom:16px;}
+  .lever:last-child{margin-bottom:0;}
+  .lever .n{font-family:'Fraunces',serif;font-weight:600;font-size:18px;color:var(--accent);line-height:1;padding-top:2px;}
+  .lever p{font-size:14.5px;line-height:1.35;color:#C9C9CF;}
+  .cta{border-radius:16px;padding:26px;background:linear-gradient(135deg,rgba(232,184,115,.09),rgba(232,184,115,.02));border:1px solid rgba(232,184,115,.2);}
+  .cta h3{font-family:'Fraunces',serif;font-weight:600;font-size:19px;margin-bottom:8px;}
+  .cta p{font-size:14px;line-height:1.6;color:var(--muted);margin-bottom:20px;}
+  .hidden{display:none;}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="wrap">
+  <div class="bar">
+    <span class="brand">arkynIA tech</span>
+    <span class="count" id="count"></span>
+  </div>
+  <div id="screen"></div>
+</div>
+
+<script>
+/* ============================================================
+   CONFIGURAÇÃO — cole aqui a URL do seu Apps Script (termina em /exec)
+   Enquanto estiver o texto abaixo, o site funciona em modo de teste
+   (mostra o resultado, mas NÃO grava na planilha).
+   ============================================================ */
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxmuXZr5raeqxkHKJtF7OLsTfAwt9LPViwmvCWCpIr8zC9QcVV5d2omfVqoZ_XXiF8mtg/exec";
+
+const ICONS = {
+  cal:'<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="14" height="14" rx="2"/><path d="M3 8h14M7 2v3M13 2v3M7.5 12l1.5 1.5L13 10"/></svg>',
+  msg:'<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 10a6 6 0 0 1-6 6H5l-3 2 1-4A6 6 0 1 1 17 10z"/></svg>',
+  reset:'<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 8a7 7 0 1 1 1.5 5"/><path d="M2 4v4h4"/></svg>',
+  clock:'<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="10" r="8"/><path d="M10 6v4l3 2"/></svg>',
+  star:'<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L10 14.9 5.2 17l.9-5.4L2.2 7.7l5.4-.8z"/></svg>',
+  user:'<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="10" cy="6" r="3.2"/><path d="M4 17c0-3.3 2.7-5 6-5s6 1.7 6 5"/><path d="M17 4v4M15 6h4"/></svg>',
+  chart:'<svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v14h14"/><rect x="6" y="9" width="2.5" height="5"/><rect x="11" y="6" width="2.5" height="8"/></svg>',
+  arrow:'<svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h10M10 5l4 4-4 4"/></svg>',
+  bolt:'<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 1L3 10h5l-1 7 6-9H8z"/></svg>',
+  spark:'<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1l1.5 4L14 6.5 9.5 8 8 13l-1.5-5L2 6.5 6.5 5z"/></svg>',
+  back:'<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 3L6 8l5 5"/></svg>'
+};
+
+const QUESTIONS = [
+  {icon:'cal', q:"Como a clínica confirma consultas hoje?", sub:"Lembretes, confirmação de presença, etc.", options:[
+    {label:"Alguém liga ou manda mensagem na mão, paciente por paciente", score:0},
+    {label:"Um sistema manda lembrete, mas a confirmação ainda é manual", score:1},
+    {label:"Totalmente automático: lembra, confirma e atualiza a agenda sozinho", score:2}]},
+  {icon:'msg', q:"Quando um lead novo chama, em quanto tempo ele é respondido?", sub:"Fora do horário comercial conta também.", options:[
+    {label:"Depende — às vezes horas, às vezes nem responde", score:0},
+    {label:"Rápido no horário comercial, mas fora dele fica no vácuo", score:1},
+    {label:"Na hora, 24/7, com um atendente automático que já qualifica", score:2}]},
+  {icon:'reset', q:"Pacientes que sumiram — vocês reativam?", sub:"Quem não volta há meses.", options:[
+    {label:"Não temos um processo pra isso", score:0},
+    {label:"De vez em quando, quando alguém lembra", score:1},
+    {label:"Tem campanha automática puxando esses pacientes de volta", score:2}]},
+  {icon:'clock', q:"Quanto tempo a recepção gasta com tarefas repetitivas por dia?", sub:"Confirmar, reagendar, responder as mesmas perguntas.", options:[
+    {label:"Boa parte do dia — é o gargalo da equipe", score:0},
+    {label:"Algumas horas, dá pra melhorar", score:1},
+    {label:"Pouco — o repetitivo já roda no automático", score:2}]},
+  {icon:'star', q:"Vocês pedem avaliação no Google de forma sistemática?", sub:"Reputação online puxa paciente novo.", options:[
+    {label:"Quase nunca pedimos", score:0},
+    {label:"Pedimos, mas sem constância", score:1},
+    {label:"Todo paciente recebe o pedido automaticamente após a consulta", score:2}]},
+  {icon:'user', q:"Como é a chegada de um paciente novo?", sub:"Boas-vindas, ficha, orientações, preparos.", options:[
+    {label:"Tudo manual, e às vezes algo escapa", score:0},
+    {label:"Temos um roteiro, mas a equipe executa na mão", score:1},
+    {label:"Onboarding automático: ficha, orientações e preparos enviados sozinhos", score:2}]},
+  {icon:'chart', q:"O gestor tem visão de ocupação e faturamento sem pedir pra ninguém?", sub:"Dados na hora vs. planilha montada na mão.", options:[
+    {label:"Precisamos montar relatório manualmente quando alguém pede", score:0},
+    {label:"Temos alguns números, mas espalhados", score:1},
+    {label:"Dashboard atualizado chega pronto, toda semana", score:2}]}
+];
+const MAX = QUESTIONS.length * 2;
+
+function tierFor(score){
+  const pct = score/MAX;
+  if(pct<=0.4) return {name:"Clínica no Manual",
+    headline:"Sua clínica funciona à base de esforço humano.",
+    desc:"A equipe segura a operação no braço — o que funciona, mas tem teto. Cada paciente novo significa mais trabalho repetitivo, e o crescimento esbarra na capacidade da recepção. A boa notícia: é exatamente aqui que a automação gera o salto mais visível.",
+    levers:["Comece pelo atendimento ao lead novo — responder na hora, 24/7, é o que mais converte.",
+      "Automatize confirmação e lembrete de consulta para reduzir faltas imediatamente.",
+      "Crie um fluxo único de reativação: pacientes parados voltam sem ninguém lembrar."]};
+  if(pct<=0.75) return {name:"Pé no Acelerador",
+    headline:"Você já saiu do zero — agora é tirar o pé do freio.",
+    desc:"Existem processos rodando, mas ainda dependem de alguém apertar o botão. O ganho agora não é começar do nada: é conectar as pontas soltas para que a operação ande sozinha do início ao fim, sem retrabalho.",
+    levers:["Feche os buracos: onde o automático para e a equipe precisa entrar na mão?",
+      "Padronize o onboarding do paciente novo para nada mais escapar.",
+      "Ligue os dados a um dashboard — decisão boa começa com número na hora."]};
+  return {name:"Quase no Piloto Automático",
+    headline:"Sua operação já voa quase sozinha. Falta refinar.",
+    desc:"Você está à frente da maioria das clínicas. O próximo nível não é automatizar mais tarefas soltas, e sim orquestrar tudo com inteligência: agentes que entendem contexto, decidem e agem — não só executam scripts.",
+    levers:["Suba o nível do atendimento com um agente de IA que entende contexto, não só responde.",
+      "Use os dados que você já coleta para antecipar faltas e ociosidade.",
+      "Transforme a automação em vantagem competitiva visível pro paciente."]};
+}
+
+let step = -1; // -1 welcome, 0..n-1 questions, n form, n+1 result
+const answers = new Array(QUESTIONS.length).fill(null);
+const screen = document.getElementById('screen');
+const countEl = document.getElementById('count');
+
+function total(){ return answers.reduce((a,v)=>a+(v||0),0); }
+
+function render(){
+  const isForm = step === QUESTIONS.length;
+  const isResult = step === QUESTIONS.length + 1;
+  countEl.textContent = (step>=0 && !isForm && !isResult) ? (step+1)+" / "+QUESTIONS.length : "";
+
+  if(step === -1){ screen.innerHTML = welcomeHTML(); bind(); return; }
+  if(isForm){ screen.innerHTML = formHTML(); bindForm(); return; }
+  if(isResult){ screen.innerHTML = resultHTML(); bind(); return; }
+  screen.innerHTML = questionHTML(step); bind();
+}
+
+function welcomeHTML(){
+  return `<div class="fade">
+    <div class="pill">${ICONS.spark}<span>Diagnóstico • 7 perguntas • 2 min</span></div>
+    <h1>Sua clínica está pronta pra <span class="it">automação?</span></h1>
+    <p class="lead">Responda 7 perguntas rápidas e descubra em que nível de maturidade sua operação está — e os 3 movimentos que mais destravam crescimento agora.</p>
+    <button class="btn" data-act="start">Começar diagnóstico ${ICONS.arrow}</button>
+  </div>`;
+}
+
+function questionHTML(i){
+  const q = QUESTIONS[i];
+  const opts = q.options.map((o,idx)=>
+    `<button class="opt${answers[i]===o.score?' sel':''}" data-act="answer" data-score="${o.score}">${o.label}</button>`
+  ).join('');
+  return `<div class="fade">
+    <div class="prog"><span style="width:${(i/QUESTIONS.length)*100}%"></span></div>
+    <div class="qicon">${ICONS[q.icon]}</div>
+    <h2>${q.q}</h2>
+    <p class="qsub">${q.sub}</p>
+    ${opts}
+    ${i>0?`<button class="back" data-act="prev">${ICONS.back} Voltar</button>`:''}
+  </div>`;
+}
+
+function formHTML(){
+  return `<div class="fade">
+    <div class="prog"><span style="width:100%"></span></div>
+    <div class="pill">${ICONS.spark}<span>Diagnóstico pronto</span></div>
+    <h2>Seu resultado está pronto.</h2>
+    <p class="qsub" style="margin-bottom:28px">Preencha abaixo pra liberar o diagnóstico completo e os 3 próximos movimentos da sua clínica.</p>
+    <div class="field" id="f-nome">
+      <label>Seu nome</label>
+      <input type="text" id="nome" placeholder="Como podemos te chamar?" autocomplete="name"/>
+      <div class="err">Preenche seu nome.</div>
+    </div>
+    <div class="field" id="f-email">
+      <label>E-mail</label>
+      <input type="email" id="email" placeholder="voce@clinica.com.br" autocomplete="email"/>
+      <div class="err">Coloca um e-mail válido.</div>
+    </div>
+    <div class="field" id="f-tel">
+      <label>WhatsApp</label>
+      <input type="tel" id="tel" placeholder="(11) 90000-0000" autocomplete="tel" maxlength="16"/>
+      <div class="err">Coloca um número válido.</div>
+    </div>
+    <p class="consent">Ao continuar, você concorda em receber o resultado e um contato da arkynIA tech. Sem spam.</p>
+    <button class="btn" id="submit" data-act="submit">Ver meu diagnóstico ${ICONS.arrow}</button>
+  </div>`;
+}
+
+function resultHTML(){
+  const t = tierFor(total());
+  const pct = Math.round((total()/MAX)*100);
+  const levers = t.levers.map((l,i)=>`<div class="lever"><span class="n">${i+1}</span><p>${l}</p></div>`).join('');
+  return `<div class="fade">
+    <p class="eyebrow">Seu diagnóstico</p>
+    <div class="tier">${t.name}</div>
+    <div class="scorerow"><span class="scorelabel">Maturidade em automação</span><span class="scorepct">${pct}%</span></div>
+    <div class="scorebar"><span style="width:${pct}%"></span></div>
+    <p class="headline">${t.headline}</p>
+    <p class="desc">${t.desc}</p>
+    <div class="levers">
+      <div class="lt">${ICONS.bolt}<span>Seus 3 próximos movimentos</span></div>
+      ${levers}
+    </div>
+    <div class="cta">
+      <h3>Quer ver esses movimentos rodando na sua clínica?</h3>
+      <p>A arkynIA coloca a operação da sua clínica no piloto automático com IA e n8n. Vamos conversar 15 minutos e mapear o primeiro fluxo.</p>
+      <a class="btn" href="https://www.portfolio.arkynia.com.br" target="_blank" rel="noopener">Falar com a arkynIA ${ICONS.arrow}</a>
+    </div>
+    <button class="back" data-act="restart" style="margin-top:28px">${ICONS.reset} Refazer diagnóstico</button>
+  </div>`;
+}
+
+function bind(){
+  screen.querySelectorAll('[data-act]').forEach(el=>{
+    el.onclick = ()=>{
+      const act = el.dataset.act;
+      if(act==='start'){ step=0; render(); }
+      else if(act==='answer'){ answers[step]=parseInt(el.dataset.score,10); setTimeout(()=>{step++; render(); window.scrollTo(0,0);},200); }
+      else if(act==='prev'){ step--; render(); }
+      else if(act==='restart'){ answers.fill(null); step=-1; render(); window.scrollTo(0,0); }
+    };
+  });
+}
+
+function maskPhone(v){
+  v = v.replace(/\D/g,'').slice(0,11);
+  if(v.length<=2) return v.length?'('+v:'';
+  if(v.length<=6) return '('+v.slice(0,2)+') '+v.slice(2);
+  if(v.length<=10) return '('+v.slice(0,2)+') '+v.slice(2,6)+'-'+v.slice(6);
+  return '('+v.slice(0,2)+') '+v.slice(2,7)+'-'+v.slice(7);
+}
+
+function bindForm(){
+  const tel = document.getElementById('tel');
+  tel.addEventListener('input',()=>{ tel.value = maskPhone(tel.value); });
+  screen.querySelector('#submit').onclick = submitLead;
+}
+
+function submitLead(){
+  const nome = document.getElementById('nome').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const tel = document.getElementById('tel').value.trim();
+  let ok = true;
+  const setErr = (id,bad)=>{ document.getElementById(id).classList.toggle('invalid',bad); if(bad) ok=false; };
+  setErr('f-nome', nome.length<2);
+  setErr('f-email', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+  setErr('f-tel', tel.replace(/\D/g,'').length<10);
+  if(!ok) return;
+
+  const btn = document.getElementById('submit');
+  btn.textContent = 'Enviando...';
+  btn.style.pointerEvents = 'none';
+
+  const t = tierFor(total());
+  const payload = {
+    nome, email, telefone: tel,
+    nivel: t.name,
+    pontuacao: Math.round((total()/MAX)*100) + '%',
+    respostas: answers.map((a,i)=> (i+1)+': '+a),
+    origem: 'diagnostico-clinica'
+  };
+
+  const done = ()=>{ step++; render(); window.scrollTo(0,0); };
+
+  if(SCRIPT_URL && SCRIPT_URL.indexOf('http')===0){
+    fetch(SCRIPT_URL, {
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body: JSON.stringify(payload)
+    }).then(done).catch(done);
+  } else {
+    // modo de teste — sem URL configurada
+    setTimeout(done, 400);
+  }
+}
+
+render();
+</script>
+</body>
+</html>
