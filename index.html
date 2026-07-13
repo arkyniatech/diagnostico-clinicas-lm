@@ -5,6 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Sua clínica está pronta pra crescer no automático? | arkynIA tech</title>
 <meta name="description" content="Diagnóstico gratuito: descubra o nível da sua clínica em operação e estruturação comercial — e por onde começar." />
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1422146782672893');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1422146782672893&ev=PageView&noscript=1"/></noscript>
+<!-- Fim Meta Pixel -->
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Hanken+Grotesk:wght@400;500;600;700&display=swap');
 
@@ -373,7 +386,7 @@ function bind(){
   screen.querySelectorAll('[data-act]').forEach(el=>{
     el.onclick=()=>{
       const act=el.dataset.act;
-      if(act==='start'){ step=0; render(); window.scrollTo(0,0); }
+      if(act==='start'){ step=0; render(); window.scrollTo(0,0); if(typeof fbq==='function') fbq('track','ViewContent',{content_name:'diagnostico-inicio'}); }
       else if(act==='answer'){ answers[step]=parseInt(el.dataset.val,10); setTimeout(()=>{step++; render(); window.scrollTo(0,0);},200); }
       else if(act==='prev'){ step--; render(); window.scrollTo(0,0); }
       else if(act==='restart'){ answers.fill(null); step=-1; render(); window.scrollTo(0,0); }
@@ -399,6 +412,7 @@ function submitLead(){
   setErr('f-email', !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
   setErr('f-tel', tel.replace(/\D/g,'').length<10);
   if(!ok) return;
+  if(typeof fbq==='function') fbq('track','Lead',{content_name:'diagnostico-clinica'});
   const btn=document.getElementById('submit'); btn.textContent='Enviando...'; btn.style.pointerEvents='none'; btn.style.opacity='.7';
 
   const t=tierFor(total());
